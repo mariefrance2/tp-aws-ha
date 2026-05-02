@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-05-02" version="21.0.0">
+  <diagram name="TP1 - Architecture AWS HA" id="tp1">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Internet -->
+        <mxCell id="internet" value="&lt;b&gt;Internet&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="40" y="340" width="140" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- ALB -->
+        <mxCell id="alb" value="&lt;b&gt;Application Load Balancer&lt;/b&gt;&lt;br&gt;Port 80 / 443&lt;br&gt;tp-ha-pritunl-alb" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="260" y="320" width="200" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Arrow Internet to ALB -->
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="internet" target="alb" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- VPC Container -->
+        <mxCell id="vpc" value="&lt;b&gt;VPC Multi-AZ — eu-north-1&lt;/b&gt;&lt;br&gt;10.0.0.0/16" style="swimlane;startSize=40;fillColor=#f5f5f5;strokeColor=#666;fontColor=#333;dashed=1;strokeWidth=2;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="530" y="100" width="840" height="640" as="geometry" />
+        </mxCell>
+
+        <!-- AZ1 Container -->
+        <mxCell id="az1" value="&lt;b&gt;AZ 1 — eu-north-1a&lt;/b&gt;" style="swimlane;startSize=30;fillColor=#fff2cc;strokeColor=#d6b656;dashed=1;fontSize=11;" vertex="1" parent="vpc">
+          <mxGeometry x="20" y="60" width="380" height="560" as="geometry" />
+        </mxCell>
+
+        <!-- AZ2 Container -->
+        <mxCell id="az2" value="&lt;b&gt;AZ 2 — eu-north-1b&lt;/b&gt;" style="swimlane;startSize=30;fillColor=#fff2cc;strokeColor=#d6b656;dashed=1;fontSize=11;" vertex="1" parent="vpc">
+          <mxGeometry x="440" y="60" width="380" height="560" as="geometry" />
+        </mxCell>
+
+        <!-- Subnet Public AZ1 -->
+        <mxCell id="pub1" value="Subnet public" style="swimlane;startSize=25;fillColor=#dae8fc;strokeColor=#6c8ebf;dashed=0;fontSize=10;" vertex="1" parent="az1">
+          <mxGeometry x="20" y="40" width="340" height="160" as="geometry" />
+        </mxCell>
+
+        <!-- EC2 Instance 1 -->
+        <mxCell id="ec2a" value="&lt;b&gt;EC2 — Instance A&lt;/b&gt;&lt;br&gt;13.49.228.241&lt;br&gt;Ubuntu 22.04 — t3.micro&lt;br&gt;Pritunl VPN + Docker&lt;br&gt;Odoo 17 + PostgreSQL" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="pub1">
+          <mxGeometry x="20" y="35" width="300" height="110" as="geometry" />
+        </mxCell>
+
+        <!-- ASG AZ1 -->
+        <mxCell id="asg1" value="&lt;b&gt;Auto Scaling Group&lt;/b&gt;&lt;br&gt;min:2 — max:4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;dashed=1;" vertex="1" parent="az1">
+          <mxGeometry x="20" y="210" width="340" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Subnet Private AZ1 (RDS) -->
+        <mxCell id="priv1" value="Subnet privé — RDS" style="swimlane;startSize=25;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" vertex="1" parent="az1">
+          <mxGeometry x="20" y="280" width="340" height="120" as="geometry" />
+        </mxCell>
+
+        <!-- RDS AZ1 -->
+        <mxCell id="rds1" value="&lt;b&gt;RDS MySQL — Primary&lt;/b&gt;&lt;br&gt;tp-ha-pritunl-db&lt;br&gt;Port 3306" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" vertex="1" parent="priv1">
+          <mxGeometry x="20" y="35" width="300" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Subnet Public AZ2 -->
+        <mxCell id="pub2" value="Subnet public" style="swimlane;startSize=25;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="az2">
+          <mxGeometry x="20" y="40" width="340" height="160" as="geometry" />
+        </mxCell>
+
+        <!-- EC2 Instance 2 -->
+        <mxCell id="ec2b" value="&lt;b&gt;EC2 — Instance B&lt;/b&gt;&lt;br&gt;16.171.237.30&lt;br&gt;Ubuntu 22.04 — t3.micro&lt;br&gt;Pritunl VPN + Docker&lt;br&gt;Odoo 17" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="pub2">
+          <mxGeometry x="20" y="35" width="300" height="110" as="geometry" />
+        </mxCell>
+
+        <!-- ASG AZ2 -->
+        <mxCell id="asg2" value="&lt;b&gt;Auto Scaling Group&lt;/b&gt;&lt;br&gt;min:2 — max:4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;dashed=1;" vertex="1" parent="az2">
+          <mxGeometry x="20" y="210" width="340" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Subnet Private AZ2 (RDS Standby) -->
+        <mxCell id="priv2" value="Subnet privé — RDS Standby" style="swimlane;startSize=25;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" vertex="1" parent="az2">
+          <mxGeometry x="20" y="280" width="340" height="120" as="geometry" />
+        </mxCell>
+
+        <!-- RDS AZ2 Standby -->
+        <mxCell id="rds2" value="&lt;b&gt;RDS MySQL — Standby&lt;/b&gt;&lt;br&gt;Réplication automatique&lt;br&gt;Port 3306" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" vertex="1" parent="priv2">
+          <mxGeometry x="20" y="35" width="300" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- S3 Bucket -->
+        <mxCell id="s3" value="&lt;b&gt;Amazon S3&lt;/b&gt;&lt;br&gt;tp-ha-pritunl-storage&lt;br&gt;Stockage objets" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="vpc">
+          <mxGeometry x="20" y="470" width="180" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Lambda -->
+        <mxCell id="lambda" value="&lt;b&gt;AWS Lambda&lt;/b&gt;&lt;br&gt;tp-ha-pritunl-function&lt;br&gt;Traitement asynchrone" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="vpc">
+          <mxGeometry x="230" y="470" width="180" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Terraform -->
+        <mxCell id="terraform" value="&lt;b&gt;Terraform (IaC)&lt;/b&gt;&lt;br&gt;Déploiement automatisé&lt;br&gt;de toute l'infrastructure" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666;fontColor=#333;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1430" y="320" width="200" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Arrow ALB to EC2 A -->
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="alb" target="ec2a" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Arrow ALB to EC2 B -->
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="alb" target="ec2b" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Arrow Terraform to VPC -->
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;dashed=1;strokeColor=#666;" edge="1" source="terraform" target="vpc" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Security Groups note -->
+        <mxCell id="sg" value="&lt;b&gt;Security Groups&lt;/b&gt;&lt;br&gt;Ports : 22, 80, 443, 1194 UDP, 8069, 8443" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666;fontSize=10;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="480" width="220" height="60" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
