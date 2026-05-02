@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hôtel Azur Palace — Luxury & Wellness</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Georgia', serif; color: #2c2c2c; }
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(10,10,10,0.85); backdrop-filter: blur(8px);
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px 60px;
+  }
+  nav .logo { color: #d4af37; font-size: 1.6rem; letter-spacing: 3px; text-transform: uppercase; }
+  nav ul { list-style: none; display: flex; gap: 35px; }
+  nav ul li a { color: #fff; text-decoration: none; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; transition: color 0.3s; }
+  nav ul li a:hover { color: #d4af37; }
+  .hero {
+    height: 100vh;
+    background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
+      url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1600&q=80') center/cover no-repeat;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center; text-align: center; color: #fff;
+  }
+  .hero-badge { border: 1px solid #d4af37; color: #d4af37; padding: 6px 20px; font-size: 0.75rem; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 24px; }
+  .hero h1 { font-size: 4rem; font-weight: 300; letter-spacing: 6px; text-transform: uppercase; line-height: 1.2; margin-bottom: 20px; }
+  .hero p { font-size: 1.1rem; letter-spacing: 2px; color: #e0e0e0; margin-bottom: 40px; }
+  .btn-gold { background: #d4af37; color: #fff; border: none; padding: 16px 45px; font-size: 0.85rem; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; text-decoration: none; transition: background 0.3s; }
+  .btn-gold:hover { background: #b8952e; }
+  .stats-bar { background: #1a1a1a; color: #fff; display: flex; justify-content: space-around; align-items: center; padding: 30px 60px; flex-wrap: wrap; gap: 20px; }
+  .stat { text-align: center; }
+  .stat-number { font-size: 2rem; color: #d4af37; font-weight: bold; }
+  .stat-label { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: #aaa; margin-top: 4px; }
+  section { padding: 90px 60px; }
+  .section-tag { color: #d4af37; font-size: 0.75rem; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 12px; }
+  .section-title { font-size: 2.4rem; font-weight: 300; letter-spacing: 2px; margin-bottom: 16px; }
+  .section-sub { color: #777; font-size: 1rem; line-height: 1.8; max-width: 560px; }
+  .rooms { background: #f9f7f4; }
+  .rooms-header { text-align: center; margin-bottom: 60px; }
+  .rooms-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+  .room-card { background: #fff; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); transition: transform 0.3s; }
+  .room-card:hover { transform: translateY(-6px); }
+  .room-card img { width: 100%; height: 240px; object-fit: cover; }
+  .room-info { padding: 28px; }
+  .room-info h3 { font-size: 1.3rem; font-weight: 400; letter-spacing: 1px; margin-bottom: 10px; }
+  .room-info p { color: #777; font-size: 0.9rem; line-height: 1.7; margin-bottom: 18px; }
+  .room-footer { display: flex; justify-content: space-between; align-items: center; }
+  .room-price { font-size: 1.4rem; color: #d4af37; font-weight: bold; }
+  .room-price span { font-size: 0.75rem; color: #999; font-weight: normal; }
+  .btn-outline { border: 1px solid #2c2c2c; padding: 10px 24px; font-size: 0.78rem; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; color: #2c2c2c; transition: all 0.3s; }
+  .btn-outline:hover { background: #2c2c2c; color: #fff; }
+  .experience { background: #fff; }
+  .exp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; margin-top: 50px; }
+  .exp-grid img { width: 100%; height: 480px; object-fit: cover; }
+  .exp-features { display: flex; flex-direction: column; gap: 28px; }
+  .exp-item { display: flex; gap: 20px; align-items: flex-start; }
+  .exp-icon { width: 50px; height: 50px; background: #f9f7f4; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1.3rem; }
+  .exp-item h4 { font-size: 1rem; letter-spacing: 1px; margin-bottom: 6px; }
+  .exp-item p { color: #777; font-size: 0.88rem; line-height: 1.7; }
+  .gallery { background: #f9f7f4; }
+  .gallery-header { text-align: center; margin-bottom: 50px; }
+  .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: 250px 250px; gap: 12px; }
+  .gallery-grid img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s; }
+  .gallery-grid img:hover { opacity: 0.85; }
+  .gallery-grid .tall { grid-row: span 2; }
+  .testimonials { background: #1a1a1a; color: #fff; text-align: center; }
+  .testimonials .section-tag { color: #d4af37; }
+  .testimonials .section-title { color: #fff; }
+  .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 50px; }
+  .testi-card { background: #2a2a2a; padding: 36px 30px; text-align: left; }
+  .stars { color: #d4af37; font-size: 1.1rem; margin-bottom: 16px; }
+  .testi-card p { color: #ccc; font-size: 0.9rem; line-height: 1.8; margin-bottom: 20px; font-style: italic; }
+  .testi-author { display: flex; align-items: center; gap: 14px; }
+  .testi-author img { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; }
+  .testi-author strong { color: #fff; font-size: 0.9rem; display: block; }
+  .testi-author span { color: #888; font-size: 0.78rem; }
+  .reservation { background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1600&q=80') center/cover; color: #fff; text-align: center; }
+  .reservation .section-title { color: #fff; }
+  .reservation .section-sub { color: #ccc; margin: 0 auto 40px; }
+  .resa-form { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
+  .resa-form input, .resa-form select { padding: 14px 20px; border: none; background: rgba(255,255,255,0.12); color: #fff; font-size: 0.88rem; letter-spacing: 1px; width: 190px; border-bottom: 1px solid #d4af37; outline: none; }
+  .resa-form input::placeholder { color: #bbb; }
+  footer { background: #0a0a0a; color: #666; padding: 50px 60px; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; }
+  footer .footer-brand .logo { color: #d4af37; font-size: 1.4rem; letter-spacing: 3px; display: block; margin-bottom: 16px; }
+  footer .footer-brand p { font-size: 0.85rem; line-height: 1.8; max-width: 260px; }
+  footer h5 { color: #fff; font-size: 0.78rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 18px; }
+  footer ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  footer ul li a { color: #666; text-decoration: none; font-size: 0.85rem; transition: color 0.3s; }
+  footer ul li a:hover { color: #d4af37; }
+  .footer-bottom { background: #0a0a0a; color: #444; text-align: center; padding: 18px; font-size: 0.78rem; border-top: 1px solid #1a1a1a; }
+  @media(max-width:768px) {
+    nav { padding: 16px 20px; } nav ul { display: none; }
+    .hero h1 { font-size: 2.2rem; } section { padding: 60px 20px; }
+    .exp-grid { grid-template-columns: 1fr; } .gallery-grid { grid-template-columns: 1fr 1fr; }
+    footer { grid-template-columns: 1fr; } .stats-bar { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo">Azur Palace</div>
+  <ul>
+    <li><a href="#rooms">Chambres</a></li>
+    <li><a href="#experience">Expériences</a></li>
+    <li><a href="#gallery">Galerie</a></li>
+    <li><a href="#reservation">Réservation</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+<section class="hero">
+  <div class="hero-badge">5 étoiles — Côte d'Azur</div>
+  <h1>L'Art de Vivre<br>à la Française</h1>
+  <p>Luxe, sérénité et gastronomie au cœur de la Méditerranée</p>
+  <a href="#reservation" class="btn-gold">Réserver votre séjour</a>
+</section>
+<div class="stats-bar">
+  <div class="stat"><div class="stat-number">48</div><div class="stat-label">Suites & Chambres</div></div>
+  <div class="stat"><div class="stat-number">2</div><div class="stat-label">Restaurants gastronomiques</div></div>
+  <div class="stat"><div class="stat-number">1500m²</div><div class="stat-label">Spa & Bien-être</div></div>
+  <div class="stat"><div class="stat-number">98%</div><div class="stat-label">Clients satisfaits</div></div>
+  <div class="stat"><div class="stat-number">15</div><div class="stat-label">Années d'excellence</div></div>
+</div>
+<section class="rooms" id="rooms">
+  <div class="rooms-header">
+    <div class="section-tag">Hébergements</div>
+    <h2 class="section-title">Nos Chambres & Suites</h2>
+    <p class="section-sub" style="margin:0 auto">Chaque espace a été pensé pour offrir confort absolu et élégance intemporelle.</p>
+  </div>
+  <div class="rooms-grid">
+    <div class="room-card">
+      <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80" alt="Chambre Classique">
+      <div class="room-info">
+        <h3>Chambre Classique Vue Jardin</h3>
+        <p>Décorée avec soin, cette chambre offre une vue apaisante sur nos jardins méditerranéens. Literie haut de gamme et salle de bain en marbre.</p>
+        <div class="room-footer">
+          <div class="room-price">€ 280 <span>/ nuit</span></div>
+          <a href="#reservation" class="btn-outline">Réserver</a>
+        </div>
+      </div>
+    </div>
+    <div class="room-card">
+      <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&q=80" alt="Suite Deluxe">
+      <div class="room-info">
+        <h3>Suite Deluxe Vue Mer</h3>
+        <p>Panorama spectaculaire sur la Méditerranée depuis votre balcon privé. Espace salon séparé, baignoire îlot et service de conciergerie dédié.</p>
+        <div class="room-footer">
+          <div class="room-price">€ 520 <span>/ nuit</span></div>
+          <a href="#reservation" class="btn-outline">Réserver</a>
+        </div>
+      </div>
+    </div>
+    <div class="room-card">
+      <img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=600&q=80" alt="Suite Présidentielle">
+      <div class="room-info">
+        <h3>Suite Présidentielle</h3>
+        <p>Le summum du luxe. Deux chambres, salon, salle à manger privée, terrasse 80m² avec piscine à débordement privative et butler 24h/24.</p>
+        <div class="room-footer">
+          <div class="room-price">€ 1 850 <span>/ nuit</span></div>
+          <a href="#reservation" class="btn-outline">Réserver</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="experience" id="experience">
+  <div class="exp-grid">
+    <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=800&q=80" alt="Spa Azur">
+    <div>
+      <div class="section-tag">Art de vivre</div>
+      <h2 class="section-title">Une Expérience<br>Incomparable</h2>
+      <p class="section-sub" style="margin-bottom:36px">Du spa au restaurant étoilé, chaque moment à l'Azur Palace est pensé pour votre bien-être total.</p>
+      <div class="exp-features">
+        <div class="exp-item"><div class="exp-icon">◈</div><div><h4>Spa & Thalassothérapie</h4><p>1 500 m² dédiés à votre bien-être. Hammam, sauna, soins signature avec produits locaux et piscine intérieure chauffée.</p></div></div>
+        <div class="exp-item"><div class="exp-icon">◈</div><div><h4>Gastronomie étoilée</h4><p>Le Chef Xavier Moreau vous propose une cuisine méditerranéenne créative, sublimée par les produits du terroir local.</p></div></div>
+        <div class="exp-item"><div class="exp-icon">◈</div><div><h4>Activités & Excursions</h4><p>Voile, plongée, randonnées sur le massif des Calanques. Notre équipe organise chaque activité sur mesure pour vous.</p></div></div>
+        <div class="exp-item"><div class="exp-icon">◈</div><div><h4>Conciergerie privée 24h/24</h4><p>Transfers privés, réservations restaurants, helicopter pad, services sur mesure. Votre confort est notre priorité absolue.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="gallery" id="gallery">
+  <div class="gallery-header">
+    <div class="section-tag">Galerie</div>
+    <h2 class="section-title">L'Azur Palace en Images</h2>
+  </div>
+  <div class="gallery-grid">
+    <img class="tall" src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80" alt="Piscine">
+    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80" alt="Restaurant">
+    <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600&q=80" alt="Bar lounge">
+    <img src="https://images.unsplash.com/photo-1560347876-aeef00ee58a1?w=600&q=80" alt="Vue mer">
+    <img src="https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=600&q=80" alt="Plage privée">
+  </div>
+</section>
+<section class="testimonials">
+  <div class="section-tag">Avis clients</div>
+  <h2 class="section-title">Ce que disent nos hôtes</h2>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <p>"Un séjour absolument magique. Le service est d'une attention rare — chaque détail est soigné. La suite vue mer nous a coupé le souffle dès l'arrivée."</p>
+      <div class="testi-author"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80" alt="Sophie M."><div><strong>Sophie Marchand</strong><span>Paris, France</span></div></div>
+    </div>
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <p>"Le restaurant gastronomique mérite à lui seul le déplacement. Le Chef Moreau est un artiste. Nous reviendrons chaque année sans hésiter."</p>
+      <div class="testi-author"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt="James T."><div><strong>James Thornton</strong><span>London, UK</span></div></div>
+    </div>
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <p>"Le spa est extraordinaire. Deux heures de soins et j'ai l'impression d'avoir rajeuni de dix ans. L'équipe est bienveillante et très professionnelle."</p>
+      <div class="testi-author"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80" alt="Elena K."><div><strong>Elena Kowalski</strong><span>Varsovie, Pologne</span></div></div>
+    </div>
+  </div>
+</section>
+<section class="reservation" id="reservation">
+  <div class="section-tag">Disponibilités</div>
+  <h2 class="section-title">Réservez votre Séjour</h2>
+  <p class="section-sub">Contactez-nous pour une offre personnalisée ou réservez directement en ligne.</p>
+  <div class="resa-form">
+    <input type="date" placeholder="Arrivée">
+    <input type="date" placeholder="Départ">
+    <select style="padding:14px 20px;border:none;background:rgba(255,255,255,0.12);color:#fff;font-size:0.88rem;border-bottom:1px solid #d4af37;outline:none;">
+      <option value="">Type de chambre</option>
+      <option>Chambre Classique</option>
+      <option>Suite Deluxe</option>
+      <option>Suite Présidentielle</option>
+    </select>
+    <input type="number" placeholder="Adultes" min="1" max="4">
+    <a href="#" class="btn-gold" style="display:flex;align-items:center;">Vérifier</a>
+  </div>
+</section>
+<footer id="contact">
+  <div class="footer-brand">
+    <span class="logo">Azur Palace</span>
+    <p>L'excellence hôtelière sur la Côte d'Azur depuis 2009. Membre des Relais & Châteaux.</p>
+  </div>
+  <div><h5>Hébergements</h5><ul><li><a href="#">Chambres Classiques</a></li><li><a href="#">Suites Deluxe</a></li><li><a href="#">Suite Présidentielle</a></li><li><a href="#">Offres spéciales</a></li></ul></div>
+  <div><h5>Expériences</h5><ul><li><a href="#">Spa & Bien-être</a></li><li><a href="#">Gastronomie</a></li><li><a href="#">Activités nautiques</a></li><li><a href="#">Événements privés</a></li></ul></div>
+  <div><h5>Contact</h5><ul><li><a href="#">+33 4 93 00 00 00</a></li><li><a href="#">contact@azurpalace.fr</a></li><li><a href="#">23 Promenade des Anglais</a></li><li><a href="#">06000 Nice, France</a></li></ul></div>
+</footer>
+<div class="footer-bottom">© 2026 Hôtel Azur Palace — Tous droits réservés — Déployé sur AWS EC2</div>
+</body>
+</html>
